@@ -12,7 +12,7 @@ app.use(store());
 app.use(logger());
 
 app.post('/api/v1/signin', asyncHandler(async (req, res) => {
-    res.send(req.body);
+    res.send({ message: 'You hit the signin endpoint!' });
 }));
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
