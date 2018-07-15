@@ -1,0 +1,30 @@
+{
+    "name": "skyda",
+    "version": "1.0.0",
+    "description": "A reuseable example of authentication systems for a web app",
+    "main": "server/server.js",
+    "scripts": {
+        "dev": "nodemon server/server.js --exec babel-node",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/willywill/skyda.git"
+    },
+    "author": "Will Germany",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/willywill/skyda/issues"
+    },
+    "homepage": "https://github.com/willywill/skyda#readme",
+    "dependencies": {
+        "body-parser": "^1.18.3",
+        "express": "^4.16.3",
+        "mongoose": "^5.2.3"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-env": "^1.7.0",
+        "nodemon": "^1.18.2"
+    }
+}
