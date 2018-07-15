@@ -1,3 +1,9 @@
 import store from './store';
+import asyncHandler from './async';
+import logger from './logger';
 
-export { store };
+export { 
+  store,
+  logger,
+  asyncHandler,
+};
