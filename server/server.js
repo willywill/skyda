@@ -9,6 +9,7 @@ import {
 } from './middleware';
 
 import config from './config';
+import { signUp } from './passport';
 
 const app = express();
 const port = process.env.PORT || config.dev.port;
@@ -19,8 +20,6 @@ app.use(passport());
 app.use(bodyParser());
 app.use(securityPolicy());
 
-app.post('/api/v1/signin', asyncHandler(async (req, res) => {
-    res.send({ message: 'You hit the signin endpoint!' });
-}));
+app.post('/api/v1/auth/signup', asyncHandler(signUp));
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
