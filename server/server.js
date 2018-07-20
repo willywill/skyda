@@ -8,12 +8,12 @@ import {
     securityPolicy,
 } from './middleware';
 import config from './config';
+import './passport';
 import { signUp, signIn, authLocal } from './controllers/AuthenticationController';
 import { log } from './middleware/logger';
 
 const app = express();
 const port = process.env.PORT || config.dev.port;
-require('./passport');
 
 app.use(store());
 app.use(logger());
