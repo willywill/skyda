@@ -10,6 +10,7 @@ import {
 
 import config from './config';
 import { signUp } from './controllers/AuthenticationController';
+import { log } from './middleware/logger';
 
 const app = express();
 const port = process.env.PORT || config.dev.port;
@@ -22,4 +23,4 @@ app.use(securityPolicy());
 
 app.post('/api/v1/auth/signup', asyncHandler(signUp));
 
-app.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen(port, () => log.info(`Server started on port ${port}`));
