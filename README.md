@@ -10,6 +10,7 @@ Skyda - (For now) A reusable example to add authentication for my personal proje
 -   Password Reset Capabilities
 -   Security Questions
 -   Deactivate Account
+-   reCAPTCHA Support
 
 ---
 

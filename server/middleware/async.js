@@ -5,10 +5,10 @@
 */
 
 const asyncHandler = fn => {
-  return function asyncWrapper (req, res, next, ...args) {
-    const route = fn(req, res, next, ...args);
-    return Promise.resolve(route).catch(next);
-  }
-}
+    return function asyncWrapper (req, res, next, ...args) {
+        const route = fn(req, res, next, ...args);
+        return Promise.resolve(route).catch(next);
+    };
+};
 
 export default asyncHandler;

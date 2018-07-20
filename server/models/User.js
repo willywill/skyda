@@ -2,30 +2,31 @@ import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 const userSchema = new Schema({
-        email: {
-            type: String,
-            required: true,
-            unique: true,
-            sparse: true,
-            trim: true,
-        },
-        password: {
-            type: String,
-            required: true,
-        },
-        phone: {
-            type: String,
-            trim: true,
-        },
-    }, { timestamps: true }
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        sparse: true,
+        trim: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    phone: {
+        type: String,
+        trim: true,
+    },
+}, { timestamps: true }
 );
 
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
     const user = this;
-    
-    if (!user.isModified('password'))
+
+    if (!user.isModified('password')) {
         return next();
-    
+    }
+
     try {
         const salt = await bcrypt.genSalt(12);
         const hash = await bcrypt.hash(user.password, salt);
@@ -39,9 +40,9 @@ userSchema.pre('save', async function(next) {
     return next();
 });
 
-userSchema.methods.comparePassword = function (password) { 
+userSchema.methods.comparePassword = function (password) {
     bcrypt.compare(password, this.password);
-}
+};
 
 const User = mongoose.model('User', userSchema);
 

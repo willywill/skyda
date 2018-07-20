@@ -1,5 +1,5 @@
 import express from 'express';
-import { 
+import {
     store,
     logger,
     passport,
@@ -9,7 +9,7 @@ import {
 } from './middleware';
 
 import config from './config';
-import { signUp } from './passport';
+import { signUp } from './controllers/AuthenticationController';
 
 const app = express();
 const port = process.env.PORT || config.dev.port;
