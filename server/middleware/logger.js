@@ -16,13 +16,13 @@ export const log = createLogger({
 
 log.stream = {
     write: (message, encoding) => {
-        log.debug(message);
+        log.info(message);
     },
 };
 
 const logger = () =>
     (process.env.NODE_ENV === 'production')
         ? morgan('combined')
-        : morgan('dev', { stream: log.stream });
+        : morgan('combined', { stream: log.stream });
 
 export default logger;

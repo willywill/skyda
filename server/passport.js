@@ -1,0 +1,49 @@
+import passport from 'passport';
+import { Strategy as JwtStrategy } from 'passport-jwt';
+import { Strategy as LocalStrategy } from 'passport-local';
+import { User } from './models';
+import { log } from './middleware/logger';
+import config from './config';
+
+const returnObject = (done) => ({ data, error = null }) => done(error, data);
+
+const localStrategyOptions = {
+    usernameField: 'email',
+    passwordField: 'password',
+};
+
+const verifyLocalStrategy = async (email, password, done) => {
+    const responseSend = returnObject(done);
+    try {
+        const query = { email };
+        const user = await User.findOne(query).exec();
+        log.debug(user);
+        const isMatch = await user.comparePassword(password);
+        return isMatch
+            ? responseSend({ data: user })
+            : responseSend({ error: 'Incorrect Email or Password' });
+    } catch (error) {
+        log.error(error);
+        responseSend({ error });
+    }
+};
+
+const jwtOptions = {
+    jwtFromRequest: req => req.cookies.jwt,
+    secretOrKey: config.auth.secret,
+};
+
+const verifyJwtStrategy = async (payload, done) => {
+    const responseSend = returnObject(done);
+    if (payload.expires > Date.now()) {
+        return responseSend({ error: 'Token has expired' });
+    }
+
+    return responseSend({ data: payload });
+};
+
+const localStrategy = new LocalStrategy(localStrategyOptions, verifyLocalStrategy);
+const jwtStrategy = new JwtStrategy(jwtOptions, verifyJwtStrategy);
+
+passport.use('local', localStrategy);
+passport.use(jwtStrategy);
