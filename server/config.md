@@ -17,6 +17,10 @@ export default {
         user: String, // Email From
         password: String, // Email Password
     },
+    nexmo: {
+        apiKey: String, // See Nexmo Verify Dashboard
+        apiSecret: String, // See Nexmo Verify Dashboard
+    },
     auth: {
         secret: String, // Private Encryption Key
     }

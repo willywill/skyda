@@ -1,5 +1,7 @@
-import nexmo from 'nexmo';
+import Nexmo from 'nexmo';
 import config from '../config';
+
+const nexmo = new Nexmo({ ...config.nexmo });
 
 const options = {
     code_length: 6,
@@ -29,7 +31,8 @@ export const confirmVerifyText = (requestId, code) => new Promise((resolve, reje
             if (result && result.status === '0') {
                 resolve();
             } else {
-                reject(result.error_text);
+                const error = 'Wrong PIN. Try again.';
+                reject(error);
             }
         }
     });
