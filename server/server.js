@@ -9,7 +9,7 @@ import {
 } from './middleware';
 import config from './config';
 import './passport';
-import { signUp, signIn, authLocal } from './controllers/AuthenticationController';
+import { signUp, signIn, authLocal, verify } from './controllers/AuthenticationController';
 import { log } from './middleware/logger';
 
 const app = express();
@@ -23,5 +23,6 @@ app.use(securityPolicy());
 
 app.post('/api/v1/auth/signup', asyncHandler(signUp));
 app.post('/api/v1/auth/signin', authLocal, asyncHandler(signIn));
+app.get('/api/v1/auth/verify/:_id', asyncHandler(verify));
 
 app.listen(port, () => log.info(`Server started on port ${port}`));

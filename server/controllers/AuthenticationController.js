@@ -27,14 +27,14 @@ const authLocal = authenticate('local');
 
 const signUp = async (req, res) => {
     try {
-        const { email, password, phone = '' } = req.body;
+        const { firstName, lastName, email, password, phone = null } = req.body;
         const query = { email };
         const user = await User.findOne(query).exec();
         if (user) {
             return res.status(403).json({ error: 'Email is already being used. Try again.' });
         } else {
-            await User.create({ email, password, phone });
-            await sendVerifyMail(email);
+            const newUser = await User.create({ firstName, lastName, email, password, phone });
+            await sendVerifyMail(newUser);
             return res.status(201).json({ message: 'Account was successfully created.' });
         }
     } catch (error) {
@@ -48,7 +48,25 @@ const signIn = async ({ body }, res) => {
     res.status(200).json({ token });
 };
 
+const verify = async ({ params }, res) => {
+    try {
+        const { _id } = params;
+        const query = { _id };
+        const update = { isVerified: true };
+        const user = await User.findByIdAndUpdate(query, update).exec();
+        if (user) {
+            return res.status(200).json({ message: 'Account successfully verified.' });
+        } else {
+            return res.status(401).send({ message: 'Something happened. Try again.' });
+        }
+    } catch (error) {
+        log.info(error);
+        return res.status(500).send({ error });
+    }
+};
+
 export {
+    verify,
     signUp,
     signIn,
     authLocal,

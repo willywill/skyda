@@ -12,10 +12,10 @@ const transportOptions = {
 };
 
 export const mailOptions = (to, subject, template) => ({
-    from: config.mail.user,
+    from: `${config.appName} <${config.mail.user}>`,
     to,
     subject,
-    text: template,
+    html: template,
 });
 
 export const transport = nodemailer.createTransport(transportOptions);
