@@ -1,4 +1,6 @@
 import express from 'express';
+import { log } from './middleware/logger';
+import { signUp, signIn, authLocal, verify } from './controllers/AuthenticationController';
 import {
     store,
     logger,
@@ -9,8 +11,6 @@ import {
 } from './middleware';
 import config from './config';
 import './passport';
-import { signUp, signIn, authLocal, verify } from './controllers/AuthenticationController';
-import { log } from './middleware/logger';
 
 const app = express();
 const port = process.env.PORT || config.dev.port;
