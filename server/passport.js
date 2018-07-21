@@ -17,7 +17,6 @@ const verifyLocalStrategy = async (email, password, done) => {
     try {
         const query = { email };
         const user = await User.findOne(query).exec();
-        log.debug(user);
         const isMatch = await user.comparePassword(password);
         return isMatch
             ? responseSend({ data: user })
@@ -46,4 +45,4 @@ const localStrategy = new LocalStrategy(localStrategyOptions, verifyLocalStrateg
 const jwtStrategy = new JwtStrategy(jwtOptions, verifyJwtStrategy);
 
 passport.use('local', localStrategy);
-passport.use(jwtStrategy);
+passport.use('jwt', jwtStrategy);
