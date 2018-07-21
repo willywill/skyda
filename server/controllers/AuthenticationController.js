@@ -3,6 +3,7 @@ import JWT from 'jsonwebtoken';
 import { log } from '../middleware/logger';
 import config from '../config';
 import passport from 'passport';
+import { sendVerifyMail } from '../mail';
 
 const signToken = user => JWT.sign(user, config.auth.secret, { expiresIn: '7d' });
 
@@ -33,6 +34,7 @@ const signUp = async (req, res) => {
             return res.status(403).json({ error: 'Email is already being used. Try again.' });
         } else {
             await User.create({ email, password, phone });
+            await sendVerifyMail(email);
             return res.status(201).json({ message: 'Account was successfully created.' });
         }
     } catch (error) {

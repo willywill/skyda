@@ -7,7 +7,7 @@ import config from './config';
 
 const returnObject = (done) => ({ data, error = null }) => done(error, data);
 
-const localStrategyOptions = {
+const localOptions = {
     usernameField: 'email',
     passwordField: 'password',
 };
@@ -41,7 +41,7 @@ const verifyJwtStrategy = async (payload, done) => {
     return responseSend({ data: payload });
 };
 
-const localStrategy = new LocalStrategy(localStrategyOptions, verifyLocalStrategy);
+const localStrategy = new LocalStrategy(localOptions, verifyLocalStrategy);
 const jwtStrategy = new JwtStrategy(jwtOptions, verifyJwtStrategy);
 
 passport.use('local', localStrategy);
