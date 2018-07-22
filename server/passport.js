@@ -1,5 +1,5 @@
 import passport from 'passport';
-import { Strategy as JwtStrategy } from 'passport-jwt';
+import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { User } from './models';
 import { log } from './middleware/logger';
@@ -28,7 +28,7 @@ const verifyLocalStrategy = async (email, password, done) => {
 };
 
 const jwtOptions = {
-    jwtFromRequest: req => req.cookies.jwt,
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: config.auth.secret,
 };
 
@@ -38,6 +38,7 @@ const verifyJwtStrategy = async (payload, done) => {
         return responseSend({ error: 'Token has expired' });
     }
 
+    log.info(`Payload: ${payload}`);
     return responseSend({ data: payload });
 };
 

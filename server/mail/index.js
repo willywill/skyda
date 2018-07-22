@@ -7,9 +7,9 @@ const getAcceptedEmails = info => info && info.accepted;
 const getSentTo = info => head(getAcceptedEmails(info));
 const emailSent = info => length(getAcceptedEmails(info));
 
-const sendMail = options => {
+const sendMail = (email, subject, template) => {
     return new Promise((resolve, reject) => {
-        transport.sendMail(options, (error, info) => {
+        transport.sendMail(mailOptions(email, subject, template), (error, info) => {
             if (error) {
                 reject(error);
             }
@@ -25,11 +25,11 @@ const sendMail = options => {
 export const sendVerifyMail = async ({ firstName, email, _id }) => {
     const subject = 'Verify Your Email Address';
     const verifyTemplate = verifyEmailTemplate(firstName, _id);
-    return sendMail(mailOptions(email, subject, verifyTemplate));
+    return sendMail(email, subject, verifyTemplate);
 };
 
 export const sendPasswordResetMail = async ({ email, _id }) => {
     const subject = 'Reset Your Password';
     const resetTemplate = passwordResetTemplate(_id);
-    return sendMail(mailOptions(email, subject, resetTemplate));
+    return sendMail(email, subject, resetTemplate);
 };

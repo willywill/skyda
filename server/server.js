@@ -1,6 +1,6 @@
 import express from 'express';
 import { log } from './middleware/logger';
-import { signUp, signIn, authLocal, verify, resetPassword, authJWT, updatePassword } from './controllers/AuthenticationController';
+import * as auth from './controllers/AuthenticationController';
 import {
     store,
     logger,
@@ -21,10 +21,11 @@ app.use(passport());
 app.use(bodyParser());
 app.use(securityPolicy());
 
-app.post('/api/v1/auth/signup', asyncHandler(signUp));
-app.post('/api/v1/auth/signin', authLocal, asyncHandler(signIn));
-app.get('/api/v1/auth/verify/:_id', asyncHandler(verify));
-app.post('/api/v1/auth/changepassword', authJWT, asyncHandler(updatePassword));
-app.post('/api/v1/auth/resetpassword', asyncHandler(resetPassword));
+app.post('/api/v1/auth/signup', asyncHandler(auth.signUp));
+app.post('/api/v1/auth/signin', auth.local, asyncHandler(auth.signIn));
+app.get('/api/v1/auth/verify/:_id', asyncHandler(auth.verify));
+app.post('/api/v1/auth/updatepassword', auth.jwt, asyncHandler(auth.updatePassword));
+app.post('/api/v1/auth/resetpassword', asyncHandler(auth.resetPassword));
+app.delete('/api/v1/auth/deactivate/:_id', auth.jwt, asyncHandler(auth.deactivateAccount));
 
 app.listen(port, () => log.info(`Server started on port ${port}`));

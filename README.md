@@ -8,7 +8,6 @@ Skyda - (For now) A reusable example to add authentication for my personal proje
 -   Login with 3rd Party Services such as Facebook or Google
 -   Two-Factor Authentication w/ SMS
 -   Password Reset Capabilities
--   Security Questions
 -   Deactivate Account
 -   reCAPTCHA Support
 

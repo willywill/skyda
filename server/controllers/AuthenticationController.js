@@ -6,7 +6,7 @@ import passport from 'passport';
 import { sendVerifyMail, sendPasswordResetMail } from '../mail';
 import { isNotEmpty } from '../utils';
 
-const signToken = user => JWT.sign(user, config.auth.secret, { expiresIn: '7d' });
+const signToken = user => JWT.sign(user, config.auth.secret);
 
 const authenticate = method => (req, res, next) => {
     const auth = (error, user) => {
@@ -24,12 +24,12 @@ const authenticate = method => (req, res, next) => {
     return passport.authenticate(method, { session: false }, auth)(req, res, next);
 };
 
-const authLocal = authenticate('local');
-const authJWT = authenticate('jwt');
+export const local = authenticate('local');
+export const jwt = authenticate('jwt');
 
-const signUp = async (req, res) => {
+export const signUp = async ({ body }, res) => {
     try {
-        const { firstName, lastName, email, password, phone = null } = req.body;
+        const { firstName, lastName, email, password, phone = null } = body;
         const query = { email };
         const user = await User.findOne(query).exec();
         if (isNotEmpty(user)) {
@@ -45,21 +45,20 @@ const signUp = async (req, res) => {
     }
 };
 
-const signIn = async ({ body }, res) => {
-    const token = signToken(body);
+export const signIn = async ({ body: { email } }, res) => {
+    const token = signToken(email);
     res.status(200).json({ token });
 };
 
-const verify = async ({ params }, res) => {
+export const verify = async ({ params: { _id } }, res) => {
     try {
-        const { _id } = params;
         const query = { _id };
         const update = { isVerified: true };
         const user = await User.findByIdAndUpdate(query, update).exec();
         if (isNotEmpty(user)) {
             return res.status(200).json({ message: 'Account successfully verified.' });
         } else {
-            return res.status(401).send({ message: 'Something happened. Try again.' });
+            return res.status(404).send({ message: 'Something happened. Try again.' });
         }
     } catch (error) {
         log.info(error);
@@ -67,7 +66,7 @@ const verify = async ({ params }, res) => {
     }
 };
 
-const updatePassword = async ({ body: { _id, newPassword } }, res) => {
+export const updatePassword = async ({ body: { _id, newPassword } }, res) => {
     try {
         const query = { _id };
         const update = { password: newPassword };
@@ -75,7 +74,7 @@ const updatePassword = async ({ body: { _id, newPassword } }, res) => {
         if (isNotEmpty(user)) {
             return res.status(200).json({ message: 'Password successfully changed.' });
         } else {
-            return res.status(401).send({ error: 'Unable to update password. Try again.' });
+            return res.status(404).send({ error: 'Unable to update password. Try again.' });
         }
     } catch (error) {
         log.info(error);
@@ -83,7 +82,7 @@ const updatePassword = async ({ body: { _id, newPassword } }, res) => {
     }
 };
 
-const resetPassword = async ({ body: { email } }, res) => {
+export const resetPassword = async ({ body: { email } }, res) => {
     try {
         const query = { email };
         const user = await User.findOne(query).exec();
@@ -91,7 +90,7 @@ const resetPassword = async ({ body: { email } }, res) => {
             await sendPasswordResetMail(user);
             return res.status(200).json({ message: 'Password reset email successfully sent.' });
         } else {
-            return res.status(401).send({ error: 'No user with this email found.' });
+            return res.status(404).send({ error: 'No user with this email found.' });
         }
     } catch (error) {
         log.info(`Could not send the email: ${error}`);
@@ -99,12 +98,13 @@ const resetPassword = async ({ body: { email } }, res) => {
     }
 };
 
-export {
-    verify,
-    signUp,
-    signIn,
-    authLocal,
-    authJWT,
-    updatePassword,
-    resetPassword,
+export const deactivateAccount = async ({ params: { _id } }, res) => {
+    try {
+        const query = { _id };
+        await User.deleteOne(query).exec();
+        return res.status(200).json({ message: 'Account successfully deactivated.' });
+    } catch (error) {
+        log.info(`Could not deactivate the account: ${error}`);
+        return res.status(500).send({ error });
+    }
 };
