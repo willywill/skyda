@@ -1,9 +1,9 @@
 import { head, length } from 'ramda';
 import { transport, mailOptions } from './transporter';
 import { log } from '../middleware/logger';
-import { verifyEmailTemplate } from './templates/verifyEmail';
+import { verifyEmailTemplate, passwordResetTemplate } from './templates';
 
-const getAcceptedEmails = info => info.accepted;
+const getAcceptedEmails = info => info && info.accepted;
 const getSentTo = info => head(getAcceptedEmails(info));
 const emailSent = info => length(getAcceptedEmails(info));
 
@@ -23,7 +23,13 @@ const sendMail = options => {
 };
 
 export const sendVerifyMail = async ({ firstName, email, _id }) => {
-    const subject = 'Verify your email address';
+    const subject = 'Verify Your Email Address';
     const verifyTemplate = verifyEmailTemplate(firstName, _id);
     return sendMail(mailOptions(email, subject, verifyTemplate));
+};
+
+export const sendPasswordResetMail = async ({ email, _id }) => {
+    const subject = 'Reset Your Password';
+    const resetTemplate = passwordResetTemplate(_id);
+    return sendMail(mailOptions(email, subject, resetTemplate));
 };

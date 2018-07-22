@@ -14,7 +14,7 @@ export const sendVerifyText = number => new Promise((resolve, reject) => {
             reject(error);
         } else {
             const requestId = result.request_id;
-            if (result.status === '0') {
+            if (result && result.status === '0') {
                 resolve(requestId);
             } else {
                 reject(result.error_text);
