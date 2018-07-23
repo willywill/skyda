@@ -34,24 +34,34 @@ const userSchema = new Schema({
 }, { timestamps: true }
 );
 
-userSchema.pre('save', async function (next) {
-    const user = this;
-
-    if (!user.isModified('password')) {
-        return next();
-    }
-
+const saltAndHashPassword = async (user, next) => {
     try {
         const salt = await bcrypt.genSalt(12);
         const hash = await bcrypt.hash(user.password, salt);
-
         user.password = hash;
         next();
     } catch (error) {
         next(error);
     }
+};
+
+const saltAndHashPasswordIfModified = async (user, next) => {
+    if (!user.password && !user.isModified('password')) {
+        return next();
+    }
+
+    await saltAndHashPassword(user, next);
 
     return next();
+};
+
+// TODO: Replace next calls with returned promises - http://mongoosejs.com/docs/middleware.html
+userSchema.pre('save', async function (next) {
+    return saltAndHashPasswordIfModified(this, next);
+});
+
+userSchema.pre('findOneAndUpdate', async function (next) {
+    return saltAndHashPasswordIfModified(this._update, next);
 });
 
 userSchema.methods.comparePassword = function (password) {

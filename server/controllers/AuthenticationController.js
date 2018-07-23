@@ -11,7 +11,7 @@ const signToken = user => JWT.sign(user, config.auth.secret);
 const authenticate = method => (req, res, next) => {
     const auth = (error, user) => {
         if (error) {
-            log.error(error);
+            log.info(`Error: ${error}`);
             return res.status(400).json({ error });
         } else if (!user) {
             return res.status(401).json({ error: 'You are unauthorized to access this resource.' });
@@ -40,7 +40,7 @@ export const signUp = async ({ body }, res) => {
             return res.status(201).json({ message: 'Account was successfully created.' });
         }
     } catch (error) {
-        log.debug(error);
+        log.debug(`Error signing up: ${error}`);
         return res.status(500).json({ error: 'Something went wrong. Try again.' });
     }
 };
@@ -61,7 +61,7 @@ export const verify = async ({ params: { _id } }, res) => {
             return res.status(404).send({ message: 'Something happened. Try again.' });
         }
     } catch (error) {
-        log.info(error);
+        log.info(`Error verifying account: ${error}`);
         return res.status(500).send({ error });
     }
 };
@@ -77,7 +77,7 @@ export const updatePassword = async ({ body: { _id, newPassword } }, res) => {
             return res.status(404).send({ error: 'Unable to update password. Try again.' });
         }
     } catch (error) {
-        log.info(error);
+        log.info(`Error updating password: ${error}`);
         return res.status(500).send({ error });
     }
 };

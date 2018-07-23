@@ -4,6 +4,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { User } from './models';
 import { log } from './middleware/logger';
 import config from './config';
+import { isNotEmpty } from './utils';
 
 const returnObject = (done) => ({ data, error = null }) => done(error, data);
 
@@ -17,12 +18,16 @@ const verifyLocalStrategy = async (email, password, done) => {
     try {
         const query = { email };
         const user = await User.findOne(query).exec();
-        const isMatch = await user.comparePassword(password);
-        return isMatch
-            ? responseSend({ data: user })
-            : responseSend({ error: 'Incorrect Email or Password' });
+        if (isNotEmpty(user)) {
+            const isMatch = await user.comparePassword(password);
+            return isMatch
+                ? responseSend({ data: user })
+                : responseSend({ error: 'Incorrect Password.' });
+        } else {
+            responseSend({ error: 'No user with this email found.' });
+        }
     } catch (error) {
-        log.error(error);
+        log.info(`Error: ${error}`);
         responseSend({ error });
     }
 };
