@@ -1,5 +1,6 @@
 import passport from 'passport';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { User } from './models';
 import { log } from './middleware/logger';
@@ -20,9 +21,7 @@ const verifyLocalStrategy = async (email, password, done) => {
         const user = await User.findOne(query).exec();
         if (isNotEmpty(user)) {
             const isMatch = await user.comparePassword(password);
-            return isMatch
-                ? responseSend({ data: user })
-                : responseSend({ error: 'Incorrect Password.' });
+            return isMatch ? responseSend({ data: user }) : responseSend({ error: 'Incorrect Password.' });
         } else {
             responseSend({ error: 'No user with this email found.' });
         }
@@ -47,8 +46,16 @@ const verifyJwtStrategy = async (payload, done) => {
     return responseSend({ data: payload });
 };
 
+const googleOptions = { callbackURL: 'api/v1/auth/google/redirect', ...config.google };
+
+const verifyGoogleStrategy = async (token, refreshToken, profile, done) => {
+    log.info(`Google Strategy: ${profile}`);
+};
+
 const localStrategy = new LocalStrategy(localOptions, verifyLocalStrategy);
 const jwtStrategy = new JwtStrategy(jwtOptions, verifyJwtStrategy);
+const googleStrategy = new GoogleStrategy(googleOptions, verifyGoogleStrategy);
 
 passport.use('local', localStrategy);
 passport.use('jwt', jwtStrategy);
+passport.use('google', googleStrategy);
