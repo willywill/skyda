@@ -1,6 +1,6 @@
 import passport from 'passport';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+// import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { User } from './models';
 import { log } from './middleware/logger';
@@ -46,16 +46,16 @@ const verifyJwtStrategy = async (payload, done) => {
     return responseSend({ data: payload });
 };
 
-const googleOptions = { callbackURL: 'api/v1/auth/google/redirect', ...config.google };
+// const googleOptions = { callbackURL: 'api/v1/auth/google/redirect', ...config.google };
 
-const verifyGoogleStrategy = async (token, refreshToken, profile, done) => {
-    log.info(`Google Strategy: ${profile}`);
-};
+// const verifyGoogleStrategy = async (token, refreshToken, profile, done) => {
+//     log.info(`Google Strategy: ${profile}`);
+// };
 
 const localStrategy = new LocalStrategy(localOptions, verifyLocalStrategy);
 const jwtStrategy = new JwtStrategy(jwtOptions, verifyJwtStrategy);
-const googleStrategy = new GoogleStrategy(googleOptions, verifyGoogleStrategy);
+// const googleStrategy = new GoogleStrategy(googleOptions, verifyGoogleStrategy);
 
 passport.use('local', localStrategy);
 passport.use('jwt', jwtStrategy);
-passport.use('google', googleStrategy);
+// passport.use('google', googleStrategy);

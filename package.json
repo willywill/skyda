@@ -1,57 +1,86 @@
 {
-    "name": "skyda",
-    "version": "1.0.0",
-    "description": "A reuseable example of authentication systems for a web app",
-    "main": "server/server.js",
-    "scripts": {
-        "dev": "nodemon server/server.js --exec babel-node",
-        "test": "jest --verbose",
-        "lint": "./node_modules/.bin/eslint server/**/*.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/willywill/skyda.git"
-    },
-    "author": "Will Germany",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/willywill/skyda/issues"
-    },
-    "homepage": "https://github.com/willywill/skyda#readme",
-    "dependencies": {
-        "bcryptjs": "^2.4.3",
-        "body-parser": "^1.18.3",
-        "express": "^4.16.3",
-        "helmet": "^3.12.1",
-        "jsonwebtoken": "^8.3.0",
-        "mongoose": "^5.2.3",
-        "morgan": "^1.9.0",
-        "nexmo": "^2.3.2",
-        "nodemailer": "^4.6.7",
-        "passport": "^0.4.0",
-        "passport-google-oauth20": "^1.0.0",
-        "passport-jwt": "^4.0.0",
-        "passport-local": "^1.0.0",
-        "ramda": "^0.25.0",
-        "winston": "^3.0.0"
-    },
-    "devDependencies": {
-        "babel-cli": "^6.26.0",
-        "babel-plugin-transform-object-rest-spread": "^6.26.0",
-        "babel-preset-env": "^1.7.0",
-        "eslint": "^5.1.0",
-        "eslint-config-standard": "^11.0.0",
-        "eslint-plugin-import": "^2.13.0",
-        "eslint-plugin-node": "^7.0.1",
-        "eslint-plugin-promise": "^3.8.0",
-        "eslint-plugin-standard": "^3.1.0",
-        "husky": "^1.0.0-rc.13",
-        "jest": "^23.4.1",
-        "nodemon": "^1.18.2"
-    },
-    "husky": {
-        "hooks": {
-            "pre-push": "npm run lint"
-        }
+  "name": "skyda",
+  "version": "1.0.0",
+  "description": "A reuseable example of authentication systems for a web app",
+  "main": "server/server.js",
+  "scripts": {
+    "dev": "NODE_ENV=development nodemon server/server.js --exec babel-node --presets @babel/preset-env --watch server/server.js",
+    "build": "next build",
+    "start": "next start",
+    "test": "jest --verbose",
+    "lint": "./node_modules/.bin/eslint server/**/*.js"
+  },
+  "babel": {
+    "env": {
+      "development": {
+        "presets": [
+          "next/babel"
+        ]
+      },
+      "production": {
+        "presets": [
+          "next/babel",
+          [
+            "@babel/env",
+            {
+              "targets": {
+                "node": "8"
+              }
+            }
+          ]
+        ]
+      }
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willywill/skyda.git"
+  },
+  "author": "Will Germany",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/willywill/skyda/issues"
+  },
+  "homepage": "https://github.com/willywill/skyda#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "helmet": "^3.12.1",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.3",
+    "morgan": "^1.9.0",
+    "nexmo": "^2.3.2",
+    "next": "^6.1.1",
+    "nodemailer": "^4.6.7",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "ramda": "^0.25.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "winston": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.44",
+    "@babel/core": "^7.0.0-beta.44",
+    "@babel/node": "^7.0.0-beta.44",
+    "@babel/preset-env": "^7.0.0-beta.44",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "eslint": "^5.1.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "husky": "^1.0.0-rc.13",
+    "jest": "^23.4.1",
+    "nodemon": "^1.18.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint"
+    }
+  }
 }

@@ -23,6 +23,11 @@ export default {
     },
     auth: {
         secret: String, // Private Encryption Key
+    },
+    google: {
+        clientID: String, // See Google API dashboard
+        clientSecret: String, // See Google API dashboard
+        callbackURL: String, // Where you want to redirect to
     }
 };
 ```
