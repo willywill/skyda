@@ -1,7 +1,7 @@
 import React from 'react';
+import { Flex } from 'grid-styled';
 import styled from 'styled-components';
 
-// eslint-disable-next-line
 const Title = styled.div`
   color: red;
   font-size: 3em;
@@ -10,7 +10,9 @@ const Title = styled.div`
 class Home extends React.PureComponent {
     render () {
         return (
-            <Title>Welcome to Next.js!</Title>
+            <Flex my={2}>
+                <Title>Welcome to Next.js!</Title>
+            </Flex>
         );
     }
 }
