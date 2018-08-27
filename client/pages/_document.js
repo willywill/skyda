@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
@@ -14,7 +13,8 @@ export default class MyCustomDocument extends Document {
         return (
             <html>
                 <Head>
-                    <title>My Page Title</title>
+                    <title>Skyda</title>
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
                     {this.props.styleTags}
                 </Head>
                 <body>
