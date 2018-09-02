@@ -5,7 +5,9 @@
     "rules": {
         "semi": [2, "always"],
         "indent": ["error", 4],
-        "comma-dangle": "off"
+        "comma-dangle": "off",
+        "react/jsx-uses-vars": "error",
+        "react/jsx-uses-react": "error"
     },
     "parserOptions": {
         "ecmaVersion": 6,

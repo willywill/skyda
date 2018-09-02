@@ -11,26 +11,26 @@ const FooterBody = styled(Footer)`
 
 class Layout extends React.PureComponent {
   static propTypes = {
-    children: node.isRequired,
-    navbar: bool,
+      children: node.isRequired,
+      navbar: bool,
   };
 
   static defaultProps = {
-    navbar: false,
+      navbar: false,
   };
 
-  render() { 
-    const { children, navbar } = this.props;
-    return (
-      <React.Fragment>
-        {navbar && <Navbar />}
-        {children}
-        <FooterBody>
-            <em>Copyright 2018. All rights reserved.</em>
-        </FooterBody>
-      </React.Fragment>
-    );
+  render () {
+      const { children, navbar } = this.props;
+      return (
+          <React.Fragment>
+              {navbar && <Navbar />}
+              {children}
+              <FooterBody>
+                  <em>Copyright 2018. All rights reserved.</em>
+              </FooterBody>
+          </React.Fragment>
+      );
   }
 }
- 
+
 export default Layout;
