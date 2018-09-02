@@ -1,19 +1,12 @@
 import React from 'react';
-import { Hero, HeroBody, Subtitle, Footer } from 'bloomer';
-import Navbar from '../components/Navbar';
-import styled from 'styled-components';
+import { Hero, HeroBody, Subtitle } from 'bloomer';
 import Icon from '../components/Icon';
-
-const FooterBody = styled(Footer)`
-    text-align: center;
-    padding: 1em;
-`;
+import Layout from '../components/Layout';
 
 class Home extends React.PureComponent {
     render () {
         return (
-            <React.Fragment>
-                <Navbar />
+            <Layout navbar>
                 <Hero isFullHeight>
                     <HeroBody>
                         <Subtitle isSize={2}>
@@ -21,10 +14,7 @@ class Home extends React.PureComponent {
                         </Subtitle>
                     </HeroBody>
                 </Hero>
-                <FooterBody>
-                    <em>Copyright 2018. All rights reserved.</em>
-                </FooterBody>
-            </React.Fragment>
+            </Layout>
         );
     }
 }
