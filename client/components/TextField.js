@@ -6,11 +6,13 @@ class TextField extends React.PureComponent {
     static propTypes = {
         label: string,
         placeholder: string,
+        icon: string,
     };
 
     static defaultProps = {
         label: '',
         placeholder: undefined,
+        icon: undefined,
     };
 
     render () {

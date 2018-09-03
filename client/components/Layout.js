@@ -7,7 +7,7 @@ import { node, bool, string } from 'prop-types';
 
 const Container = styled(Flex)`
     min-height: 100vh;
-    background-color: ${props => props.backgroundColor || 'white'};
+    background-color: ${props => props.backgroundColor || 'hsl(204, 86%, 53%)'};
 `;
 
 class Layout extends React.PureComponent {
