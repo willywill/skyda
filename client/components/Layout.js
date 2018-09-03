@@ -1,12 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
 import Navbar from '../components/Navbar';
-import { Footer } from 'bloomer';
+import Footer from './Footer';
+import styled from 'styled-components';
+import { Flex } from 'grid-styled';
 import { node, bool } from 'prop-types';
 
-const FooterBody = styled(Footer)`
-    text-align: center;
-    padding: 1em;
+const Container = styled(Flex)`
+    min-height: 100vh;
 `;
 
 class Layout extends React.PureComponent {
@@ -22,13 +22,11 @@ class Layout extends React.PureComponent {
   render () {
       const { children, navbar } = this.props;
       return (
-          <React.Fragment>
+          <Container flexDirection="column" justifyContent="space-between" alignItems="center">
               {navbar && <Navbar />}
               {children}
-              <FooterBody>
-                  <em>© Copyright 2018. All rights reserved.</em>
-              </FooterBody>
-          </React.Fragment>
+              <Footer />
+          </Container>
       );
   }
 }

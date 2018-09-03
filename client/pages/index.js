@@ -7,7 +7,7 @@ class Home extends React.PureComponent {
     render () {
         return (
             <Layout navbar>
-                <Hero isFullHeight isColor="info">
+                <Hero isFullHeight isColor="info" style={{ width: '100%' }}>
                     <Flex style={{ height: '100vh' }} justifyContent="center" alignItems="center">
                         <Subtitle isSize={2}>
                             <Flex flexDirection="column">
