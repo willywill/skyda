@@ -40,12 +40,11 @@ const jwtOptions = {
 
 const verifyJwtStrategy = async (payload, done) => {
     const responseSend = returnObject(done);
-    console.log(payload);
     if (payload.expires > Date.now()) {
         return responseSend({ error: 'Token has expired' });
     }
 
-    log.info(`Payload: ${payload}`);
+    log.info(`Payload: ${JSON.stringify(payload, null, 2)}`);
     return responseSend({ data: payload });
 };
 

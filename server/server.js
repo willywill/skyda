@@ -5,7 +5,7 @@ import { store, logger, passport, bodyParser, cookieParser, securityPolicy } fro
 import config from './config';
 import './passport';
 import { viewRoute } from './utils';
-import authRoutes from './routes';
+import { authRoutes, accountRoutes } from './routes';
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = nextApp({ dir: './client', dev });
@@ -30,6 +30,7 @@ app.prepare().then(() => {
      * API Routes
      */
     server.use('/api/v1/auth', authRoutes);
+    server.use('/api/v1/', accountRoutes);
 
     /**
      * View Routes
