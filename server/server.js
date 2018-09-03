@@ -1,7 +1,7 @@
 import express from 'express';
 import nextApp from 'next';
 import { log } from './middleware/logger';
-import { store, logger, passport, bodyParser, securityPolicy } from './middleware';
+import { store, logger, passport, bodyParser, cookieParser, securityPolicy } from './middleware';
 import config from './config';
 import './passport';
 import { viewRoute } from './utils';
@@ -23,6 +23,7 @@ app.prepare().then(() => {
     server.use(logger());
     server.use(passport());
     server.use(bodyParser());
+    server.use(cookieParser());
     server.use(securityPolicy());
 
     /**

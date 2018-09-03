@@ -53,6 +53,7 @@
     "bloomer": "^0.6.3",
     "body-parser": "^1.18.3",
     "bulma": "^0.7.1",
+    "cookie-parser": "^1.4.3",
     "express": "^4.16.3",
     "grid-styled": "^5.0.2",
     "helmet": "^3.12.1",

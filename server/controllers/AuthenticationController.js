@@ -6,7 +6,13 @@ import passport from 'passport';
 import { sendVerifyMail, sendPasswordResetMail } from '../mail';
 import { isNotEmpty } from '../utils';
 
-const signToken = user => JWT.sign(user, config.auth.secret);
+const expiresIn = 60 * 60 * 24 * 7;
+const signToken = user => JWT.sign(user, config.auth.secret, { expiresIn });
+
+const cookieOptions = {
+    maxAge: expiresIn,
+    httpOnly: true,
+};
 
 const authenticate = method => (req, res, next) => {
     const auth = (error, user) => {
@@ -46,7 +52,8 @@ export const signUp = async ({ body }, res) => {
 };
 
 export const signIn = async ({ body: { email } }, res) => {
-    const token = signToken(email);
+    const token = signToken({ email });
+    res.cookie('token', token, cookieOptions);
     res.status(200).json({ token });
 };
 

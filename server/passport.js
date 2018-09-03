@@ -31,13 +31,16 @@ const verifyLocalStrategy = async (email, password, done) => {
     }
 };
 
+const cookieExtractor = req => req && req.cookies ? req.cookies.token : null;
+
 const jwtOptions = {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
     secretOrKey: config.auth.secret,
 };
 
 const verifyJwtStrategy = async (payload, done) => {
     const responseSend = returnObject(done);
+    console.log(payload);
     if (payload.expires > Date.now()) {
         return responseSend({ error: 'Token has expired' });
     }
