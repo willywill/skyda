@@ -7,21 +7,23 @@ class TextField extends React.PureComponent {
         label: string,
         placeholder: string,
         icon: string,
+        type: string,
     };
 
     static defaultProps = {
         label: '',
         placeholder: undefined,
         icon: undefined,
+        type: 'text',
     };
 
     render () {
-        const { label, placeholder } = this.props;
+        const { type, label, placeholder } = this.props;
         return (
             <Field>
                 {label && <Label>{label}</Label>}
                 <Control>
-                    <Input type="text" isColor="primary" placeholder={placeholder} />
+                    <Input type={type} isColor="primary" placeholder={placeholder} />
                 </Control>
             </Field>
         );

@@ -2,6 +2,7 @@ import React from 'react';
 import { Flex, Box } from 'grid-styled';
 import { Subtitle, Button } from 'bloomer';
 import Layout from '../components/Layout';
+import { withRouter } from 'next/router';
 
 class Home extends React.PureComponent {
     render () {
@@ -13,7 +14,7 @@ class Home extends React.PureComponent {
                             <Box mb={4} style={{ color: 'white' }}>
                                 Welcome to Skyda™
                             </Box>
-                            <Button isColor="primary">
+                            <Button isColor="primary" onClick={() => this.props.router.push('/signin')}>
                                 Sign In
                             </Button>
                         </Flex>
@@ -24,4 +25,4 @@ class Home extends React.PureComponent {
     }
 }
 
-export default Home;
+export default withRouter(Home);
