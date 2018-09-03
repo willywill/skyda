@@ -1,18 +1,25 @@
 import React from 'react';
-import { Hero, HeroBody, Subtitle } from 'bloomer';
-import Icon from '../components/Icon';
+import { Flex, Box } from 'grid-styled';
+import { Hero, Subtitle, Button } from 'bloomer';
 import Layout from '../components/Layout';
 
 class Home extends React.PureComponent {
     render () {
         return (
             <Layout navbar>
-                <Hero isFullHeight>
-                    <HeroBody>
+                <Hero isFullHeight isColor="info">
+                    <Flex style={{ height: '100vh' }} justifyContent="center" alignItems="center">
                         <Subtitle isSize={2}>
-                            Title <Icon icon="check-square" />
+                            <Flex flexDirection="column">
+                                <Box mb={4}>
+                                    Welcome to Skyda™
+                                </Box>
+                                <Button isColor="primary">
+                                    Sign In
+                                </Button>
+                            </Flex>
                         </Subtitle>
-                    </HeroBody>
+                    </Flex>
                 </Hero>
             </Layout>
         );

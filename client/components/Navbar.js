@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from 'grid-styled';
-import { Navbar, NavbarItem, NavbarStart, NavbarEnd, NavbarBrand, NavbarMenu } from 'bloomer';
+import { Navbar, NavbarItem, NavbarStart, NavbarEnd, NavbarBrand, NavbarMenu, Button } from 'bloomer';
 
 class NavbarComponent extends React.PureComponent {
     render () {
@@ -9,17 +9,20 @@ class NavbarComponent extends React.PureComponent {
                 <NavbarBrand>
                     <NavbarItem>
                         <Box mx={2}>
-                Skyda™
+                            Skyda™
                         </Box>
                     </NavbarItem>
                 </NavbarBrand>
                 <NavbarMenu>
                     <NavbarStart>
-                        <NavbarItem href='#'>Home</NavbarItem>
+                        <NavbarItem href='/'>Home</NavbarItem>
                     </NavbarStart>
                     <NavbarEnd>
-                        <NavbarItem href="#">Sign-In</NavbarItem>
-                        <NavbarItem href="#">Sign-Up</NavbarItem>
+                        <NavbarItem href="#">
+                            <Button isColor="primary">
+                                Sign In
+                            </Button>
+                        </NavbarItem>
                     </NavbarEnd>
                 </NavbarMenu>
             </Navbar>

@@ -26,7 +26,7 @@ class Layout extends React.PureComponent {
               {navbar && <Navbar />}
               {children}
               <FooterBody>
-                  <em>Copyright 2018. All rights reserved.</em>
+                  <em>© Copyright 2018. All rights reserved.</em>
               </FooterBody>
           </React.Fragment>
       );
