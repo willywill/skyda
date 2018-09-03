@@ -36,7 +36,7 @@ export const signUp = async ({ body }, res) => {
             return res.status(403).json({ error: 'Email is already being used. Try again.' });
         } else {
             const newUser = await User.create({ firstName, lastName, email, password, phone });
-            await sendVerifyMail(newUser);
+            sendVerifyMail(newUser);
             return res.status(201).json({ message: 'Account was successfully created.' });
         }
     } catch (error) {
