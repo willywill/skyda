@@ -23,11 +23,11 @@ const verifyLocalStrategy = async (email, password, done) => {
             const isMatch = await user.comparePassword(password);
             return isMatch ? responseSend({ data: user }) : responseSend({ error: 'Incorrect Password.' });
         } else {
-            responseSend({ error: 'No user with this email found.' });
+            return responseSend({ error: 'No user with this email found.' });
         }
     } catch (error) {
         log.info(`Error: ${error}`);
-        responseSend({ error });
+        return responseSend({ error });
     }
 };
 

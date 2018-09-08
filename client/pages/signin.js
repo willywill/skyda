@@ -3,12 +3,20 @@ import Card from '../components/Card';
 import Layout from '../components/Layout';
 import SignUp from '../components/composite/SignUp';
 import SignIn from '../components/composite/SignIn';
+import fetch from '../utils/fetch';
+import Error from '../components/Error';
 
 class SignInPage extends React.PureComponent {
-    state = { showSignUp: false };
+    state = { showSignUp: false, error: '' };
 
-    handleSignIn = async () => {
-        console.log('Sign In Clicked');
+    handleSignIn = async (data) => {
+        try {
+            const res = await fetch.post('http://localhost:3002/api/v1/auth/signin', data);
+            console.log(res);
+        } catch (error) {
+            console.log(error.response.data);
+            this.setState({ error: error.response.data.error });
+        }
     }
 
     handleSignUp = async () => {
@@ -16,15 +24,15 @@ class SignInPage extends React.PureComponent {
     }
 
     handleNoAccountClick = () => {
-        this.setState({ showSignUp: true });
+        this.setState({ showSignUp: true, error: '' });
     }
 
     handleExistingAccountClick = () => {
-        this.setState({ showSignUp: false });
+        this.setState({ showSignUp: false, error: '' });
     }
 
     render () {
-        const { showSignUp } = this.state;
+        const { showSignUp, error } = this.state;
         return (
             <Layout navbar>
                 <Card>
@@ -38,6 +46,7 @@ class SignInPage extends React.PureComponent {
                             onClickNoAccount={this.handleNoAccountClick}
                         />
                     }
+                    {error && <Error error={error} />}
                 </Card>
             </Layout>
         );

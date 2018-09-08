@@ -23,7 +23,7 @@ class TextField extends React.PureComponent {
             <Field>
                 {label && <Label>{label}</Label>}
                 <Control>
-                    <Input type={type} isColor="primary" placeholder={placeholder} />
+                    <Input type={type} isColor="primary" placeholder={placeholder} {...this.props} />
                 </Control>
             </Field>
         );

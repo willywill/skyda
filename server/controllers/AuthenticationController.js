@@ -20,7 +20,8 @@ const authenticate = method => (req, res, next) => {
             log.info(`Error: ${error}`);
             return res.status(400).json({ error });
         } else if (!user) {
-            return res.status(401).json({ error: 'You are unauthorized to access this resource.' });
+            log.info(`Error: No user`);
+            return res.status(404).json({ error: 'Unexpected error occured. Please try again.' });
         } else {
             req.user = user;
             return next();
