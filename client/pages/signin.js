@@ -1,59 +1,47 @@
 import React from 'react';
 import Card from '../components/Card';
 import Layout from '../components/Layout';
-import TextField from '../components/TextField';
-import { Subtitle, Field, FieldBody, Button } from 'bloomer';
-import { Flex, Box } from 'grid-styled';
+import SignUp from '../components/composite/SignUp';
+import SignIn from '../components/composite/SignIn';
 
-class SignIn extends React.PureComponent {
+class SignInPage extends React.PureComponent {
     state = { showSignUp: false };
 
-    renderSignUpView = () => (
-        <React.Fragment>
-            <Subtitle hasTextAlign="centered" isSize={3}>Sign Up</Subtitle>
-            <Field isGrouped isHorizontal>
-                <FieldBody>
-                    <TextField label="First Name" placeholder="Your first name" />
-                    <TextField label="Last Name" placeholder="Your last name" />
-                </FieldBody>
-            </Field>
-            <TextField label="Email" placeholder="Enter a valid email address" icon="envelope" />
-            <TextField label="Phone Number" placeholder="e.g. +15135555555" />
-            <TextField type="password" label="Password" placeholder="Must be at least 8 characters" />
-            <TextField type="password" label="Confirm Password" placeholder="Must be the same as password" />
-            <Flex flexDirection="column" alignItems="center">
-                <Button style={{ width: '100%', margin: '10px 0px' }} isColor="primary">Sign Up</Button>
-                <Box>
-                    <a onClick={() => this.setState({ showSignUp: false })}>Already have an account?</a>
-                </Box>
-            </Flex>
-        </React.Fragment>
-    );
+    handleSignIn = async () => {
+        console.log('Sign In Clicked');
+    }
 
-    renderSignInView = () => (
-        <React.Fragment>
-            <Subtitle hasTextAlign="centered" isSize={3}>Sign In</Subtitle>
-            <TextField label="Email" placeholder="Enter a valid email address" icon="envelope" />
-            <TextField type="password" label="Password" placeholder="Must be at least 8 characters" />
-            <Flex flexDirection="column" alignItems="center">
-                <Button style={{ width: '100%', margin: '10px 0px' }} isColor="primary">Sign In</Button>
-                <Box>
-                    <a onClick={() => this.setState({ showSignUp: true })}>Don't have an account yet?</a>
-                </Box>
-            </Flex>
-        </React.Fragment>
-    );
+    handleSignUp = async () => {
+        console.log('Sign Up Clicked');
+    }
+
+    handleNoAccountClick = () => {
+        this.setState({ showSignUp: true });
+    }
+
+    handleExistingAccountClick = () => {
+        this.setState({ showSignUp: false });
+    }
 
     render () {
         const { showSignUp } = this.state;
         return (
             <Layout navbar>
                 <Card>
-                    {showSignUp ? this.renderSignUpView() : this.renderSignInView()}
+                    {showSignUp
+                        ? <SignUp
+                            onSignUp={this.handleSignUp}
+                            onClickExistingAccount={this.handleExistingAccountClick}
+                        />
+                        : <SignIn
+                            onSignIn={this.handleSignIn}
+                            onClickNoAccount={this.handleNoAccountClick}
+                        />
+                    }
                 </Card>
             </Layout>
         );
     }
 }
 
-export default SignIn;
+export default SignInPage;
